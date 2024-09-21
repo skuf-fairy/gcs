@@ -1,0 +1,55 @@
+[c4plantuml]
+
+....
+
+
+@startuml
+
+interface GameLifeCycle {
+  start?(): void;
+  stop?(): void;
+  update?(delta: number): void;
+  destroy?(): void;
+  pause?(): void;
+  resume?(): void;
+}
+
+interface IGameWorld extends IGameLifeCycleEntity {
+  addGameObject(...gameObjectList: IGameObject[]): void;
+  removeGameObject(gameObject: UnknownConstructor<IGameObject>): void;
+  clearDestroyedGameObjects(): void;
+  getGameObject<T>(gameObject: UnknownConstructor<IGameObject>): T | undefined;
+  getGameObjectByTag<T>(tag: string): T | undefined;
+  getGameObjectList<T>(gameObject: UnknownConstructor<IGameObject>): T[];
+  getGameObjectListByTag<T>(tag: string): T[];
+  getGameObjectCountByTag(tag: UnknownConstructor<IGameObject>): number;
+  getGameObjectCount(gameObject: any): number;
+  clear(): void;
+}
+
+interface IGameObject extends IGameLifeCycleEntity {
+  tag: string;
+  isMarkedAsDestroyed: boolean;
+  world: IGameWorld;
+  addToWorld(world: IGameWorld): void;
+  addComponent(...componentList: IGameObjectComponent[]): void;
+  removeComponent(component: UnknownConstructor<IGameObjectComponent>): void;
+  getComponent<T extends IGameObjectComponent>(component: UnknownConstructor<T>): T | undefined;
+  getComponentByTag<T extends IGameObjectComponent>(tag: string): T | undefined;
+  setAsDestroyed(): void;
+}
+
+interface IGameObjectComponent extends IGameLifeCycleEntity {
+  tag: string;
+  gameObject: IGameObject;
+  bindGameObject(go: IGameObject): void;
+  onAddToGameObject?(go: IGameObject): void;
+  onAddToWorld?(world: IGameWorld): void;
+}
+
+IGameWorld *-left- "many" IGameObject
+IGameObject *-left- "many" IGameObjectComponent
+
+@enduml
+
+....

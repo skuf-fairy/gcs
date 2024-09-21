@@ -1,0 +1,40 @@
+[c4plantuml]
+
+....
+
+@startuml
+
+interface GameLifeCycle {
+  start?(): void;
+  stop?(): void;
+  update?(delta: number): void;
+  destroy?(): void;
+  pause?(): void;
+  resume?(): void;
+}
+
+interface IGameRenderer extends GameLifeCycle {
+  create(containerNode: HTMLElement): void;
+  clear(): void;
+  get dimensions(): IDimensions;
+  get container(): IGameWorldContainer;
+}
+
+interface IRenderer extends GameLifeCycle {
+  rootContainer: IGameWorldContainer;
+  create(containerNode: HTMLElement): void;
+  getFrameDimensions(): IDimensions;
+}
+
+interface IGameWorldContainer {
+  removeChildren(): void;
+  addChild(child: any): void;
+  removeChild(child: any): void;
+}
+
+IGameRenderer *-right- IRenderer
+IRenderer *-- IGameWorldContainer
+
+@enduml
+
+....

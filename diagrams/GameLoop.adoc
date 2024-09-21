@@ -1,0 +1,36 @@
+[c4plantuml]
+
+....
+
+@startuml
+
+interface GameLifeCycle {
+  start?(): void;
+  stop?(): void;
+  update?(delta: number): void;
+  destroy?(): void;
+  pause?(): void;
+  resume?(): void;
+}
+
+interface IGameLifeCycle extends GameLifeCycle {
+  gameState: GameState;
+  gameStateEvents: GameStateEvents;
+  gameLoop: IGameLoop;
+  reset(): void;
+}
+
+interface IGameLoop extends GameLifeCycle {
+  addUpdatableEntity(...entity: GameLifeCycle[]): void;
+}
+
+class GameState
+class GameStateEvents
+
+IGameLifeCycle *-- GameState
+IGameLifeCycle *-- GameStateEvents
+IGameLifeCycle *-- IGameLoop
+
+@enduml
+
+....

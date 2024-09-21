@@ -1,0 +1,59 @@
+[c4plantuml]
+
+....
+
+@startuml
+
+
+together {
+  interface GameLifeCycle
+  
+  interface IGameWorld extends GameLifeCycle
+  
+  interface IGameTime extends GameLifeCycle
+  
+  interface IGameScripts extends GameLifeCycle
+  
+  interface IGameScript extends GameLifeCycle
+  
+  interface IGameRenderer extends GameLifeCycle
+  
+  interface IRenderer extends GameLifeCycle
+  
+  interface IGameWorldContainer
+  
+  interface IGameLoop extends GameLifeCycle
+  
+  interface IGameLifeCycle extends GameLifeCycle
+  
+  interface IGameObject extends GameLifeCycle
+  
+  interface IGameObjectComponent extends GameLifeCycle
+}
+
+class GameState
+class GameStateEvents
+
+GCSEngine *-- IGameWorld
+GCSEngine *-- IGameTime
+GCSEngine *-- IGameScripts
+GCSEngine *-- IGameRenderer
+GCSEngine *-- IGameLifeCycle
+
+IGameLifeCycle *-- GameState
+IGameLifeCycle *-- GameStateEvents
+IGameLifeCycle *-- IGameLoop
+
+IGameLoop *-- "many" GameLifeCycle
+
+IGameScripts *-- "many" IGameScript
+
+IGameWorld *-- "many" IGameObject
+IGameObject *-- "many" IGameObjectComponent
+
+IGameRenderer *-- IRenderer
+IRenderer *-- IGameWorldContainer
+
+@enduml
+
+....

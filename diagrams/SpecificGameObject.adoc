@@ -1,0 +1,24 @@
+[c4plantuml]
+
+....
+
+
+@startuml
+
+class GameObject 
+
+abstract class BaseComponent
+
+class SpecificGameObject extends GameObject
+
+class GameObjectComponent1 extends BaseComponent
+class GameObjectComponent2 extends BaseComponent
+class GameObjectComponent3 extends BaseComponent
+
+SpecificGameObject *-- GameObjectComponent1
+SpecificGameObject *-- GameObjectComponent2
+SpecificGameObject *-- GameObjectComponent3
+
+@enduml
+
+....

@@ -1,0 +1,30 @@
+[c4plantuml]
+
+....
+
+@startuml
+
+interface GameLifeCycle {
+  start?(): void;
+  stop?(): void;
+  update?(delta: number): void;
+  destroy?(): void;
+  pause?(): void;
+  resume?(): void;
+}
+
+interface IGameScript extends GameLifeCycle {
+  create?(): void;
+}
+
+interface IGameScripts extends GameLifeCycle {
+  scripts: IGameScript[];
+  clear(): void;
+}
+
+IGameScripts *-left- "many" IGameScript
+
+
+@enduml
+
+....
