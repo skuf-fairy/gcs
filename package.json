@@ -1,12 +1,11 @@
 {
-  "name": "gcs",
+  "name": "gcs-arch",
   "version": "0.0.1",
   "main": "lib/index.js",
   "license": "UNLICENSED",
   "files": [
     "lib/"
   ],
-  "repository": "https://github.com/skuf-fairy/gcsO",
   "publishConfig": {
     "access": "public"
   },
@@ -43,5 +42,18 @@
   "dependencies": {
     "eventemitter3": "5.0.1",
     "brandi": "5.0.0"
-  }
+  },
+  "author": "skuf-fairy",
+  "description": "## Описание",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skuf-fairy/gcs.git"
+  },
+  "keywords": [
+    "gamedev"
+  ],
+  "bugs": {
+    "url": "https://github.com/skuf-fairy/gcs/issues"
+  },
+  "homepage": "https://github.com/skuf-fairy/gcs#readme"
 }
