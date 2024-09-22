@@ -4,8 +4,10 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
 
 jobs:
   build:
@@ -31,12 +33,11 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - run: 
-            git config user.name skuf-fairy
-            git config.email thisboxforworkismine@gmail.com
-            npm version ${{ github.event.inputs.version }}
-            git push origin master
-            git push origin v${{ github.event.inputs.version }}
+      - run: git config user.name skuf-fairy
+          git config.email thisboxforworkismine@gmail.com
+          npm version ${{ github.event.inputs.version }}
+          git push origin master
+          git push origin v${{ github.event.inputs.version }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
