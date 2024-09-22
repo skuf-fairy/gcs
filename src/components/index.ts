@@ -5,3 +5,5 @@ export {Transform2dComponent} from './Transform2dComponent';
 export {Transform3dComponent} from './Transform3dComponent';
 export {TimerComponent} from './TimerComponent';
 export * from './components.types';
+
+export {BaseComponent} from './BaseComponent';

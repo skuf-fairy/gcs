@@ -1,4 +1,3 @@
-import {squaredDistance} from '../collisions/collisions.utils';
 import {IVector2} from '../components/components.types';
 
 export class Vector2Utils {
@@ -7,7 +6,7 @@ export class Vector2Utils {
   }
 
   public static squaredDistance(v1: IVector2, v2: IVector2): number {
-    return squaredDistance(v1.x, v1.y, v2.x, v2.y);
+    return Math.pow(v2.x - v1.x, 2) + Math.pow(v2.y - v1.y, 2);
   }
 
   public static add(v1: IVector2, v2: IVector2): IVector2 {

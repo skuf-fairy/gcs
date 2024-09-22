@@ -1,4 +1,3 @@
-import {CollisionsDetector} from '../collisions/CollisionsDetector';
 import {Vector2Utils} from '../utils/Vector2Utils';
 import {GameLifeCycle} from './game-loop/GameLifeCycle';
 import {GameScripts} from './updatable-entities/GameScripts';
@@ -11,7 +10,6 @@ import {Directions} from '../constants';
 import {AnyRenderer, IGameRenderer, IGameWorldContainer} from './core.types';
 
 export class GCSEngine<Container extends IGameWorldContainer, Renderer extends AnyRenderer<Container>> {
-  static CollisionsDetector = CollisionsDetector;
   static Vector2Utils = Vector2Utils;
   static EventEmitter = EventEmitter;
   static Directions = Directions;
