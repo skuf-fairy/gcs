@@ -33,10 +33,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - run: git config user.name skuf-fairy
-          git config user.email thisboxforworkismine@gmail.com
-          npm version ${{ github.event.inputs.version }}
+      - run: npm version ${{ github.event.inputs.version }}
           git push origin --tags
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
