@@ -13,6 +13,8 @@ export {GameStateEvents} from './core/game-loop/GameStateEvents';
 export {GameLifeCycle} from './core/game-loop/GameLifeCycle';
 
 export {GCSEngine} from './core/GCSEngine';
+
 export {ObservableData} from './utils/ObservableData';
+export {Ticker} from './utils/Ticker/Ticker';
 
 export * from './components/index';
