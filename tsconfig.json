@@ -15,6 +15,6 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true
   },
-  "include": ["src/*", "src/__tests__/gcsEngineFactory.ts"],
+  "include": ["src/*"],
   "exclude": ["node_modules"]
 }
