@@ -30,6 +30,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash.once": "4.1.9",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
     "brandi": "5.0.0",
@@ -41,7 +42,6 @@
     "vitest": "0.28.3"
   },
   "dependencies": {
-    "@types/lodash.once": "4.1.9",
     "eventemitter3": "5.0.1",
     "lodash.once": "4.1.1"
   },
