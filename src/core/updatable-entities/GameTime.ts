@@ -13,23 +13,23 @@ export class GameTime implements IGameTime {
     this.timeMs = timeMS;
   }
 
-  public start(): void {
+  public onStart(): void {
     this.ticker.start();
   }
 
-  public update(): void {
+  public onUpdate(): void {
     this.timeMs += this.getElapsedMS();
   }
 
-  public pause(): void {
+  public onPause(): void {
     this.ticker.stop();
   }
 
-  public stop(): void {
+  public onStop(): void {
     this.ticker.stop();
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     this.ticker.stop();
   }
 

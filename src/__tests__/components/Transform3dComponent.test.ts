@@ -1,10 +1,11 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../di/di.container';
 import {FakeRenderer} from '../FakeRenderer';
-import {GCS_DI_TOKENS} from '../di/di.tokens';
+import {createGCSDIContainer} from '../../di/di.container';
+import {getDITokens} from '../../di/di.tokens';
 
 describe('Transform3dComponent', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Init', () => {
     const transformComponent = diContainer.get(GCS_DI_TOKENS.gcsTransform3dComponent);

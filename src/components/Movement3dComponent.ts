@@ -25,7 +25,7 @@ export class Movement3dComponent extends BaseComponent {
    * Обновление позиции игрового объекта в соответствующем направлении с заданной скоростью
    * @param delta время между кадрами
    */
-  public update(delta: number): void {
+  public onUpdate(delta: number): void {
     this.velocity += this.acceleration;
 
     this.transformComponent.x += this.direction3d.x * this.velocity * delta;

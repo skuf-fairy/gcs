@@ -1,19 +1,12 @@
-import {Vector2Utils} from '../utils/Vector2Utils';
 import {GameLifeCycle} from './game-loop/GameLifeCycle';
 import {GameScripts} from './updatable-entities/GameScripts';
 import {GameTime} from './updatable-entities/GameTime';
 import {GameWorld} from './updatable-entities/GameWorld';
-import {EventEmitter} from 'eventemitter3';
 
 import {VisibilityChangeListener} from './updatable-entities/VisibilityChangeListener';
-import {Directions} from '../constants';
 import {AnyRenderer, IGameRenderer, IGameWorldContainer} from './core.types';
 
-export class GCSEngine<Container extends IGameWorldContainer, Renderer extends AnyRenderer<Container>> {
-  static Vector2Utils = Vector2Utils;
-  static EventEmitter = EventEmitter;
-  static Directions = Directions;
-
+export class Scope<Container extends IGameWorldContainer, Renderer extends AnyRenderer<Container>> {
   constructor(
     public readonly world: GameWorld,
     public readonly time: GameTime,
@@ -23,14 +16,14 @@ export class GCSEngine<Container extends IGameWorldContainer, Renderer extends A
     // todo добавлять как плагин?
     private readonly visibilityChangeListener: VisibilityChangeListener,
   ) {
-    this.visibilityChangeListener.bindEngine(this);
+    this.visibilityChangeListener.bindScope(this);
   }
 
   public destroy(): void {
-    this.gameLifeCycle.destroy?.();
-    this.scripts.destroy?.();
-    this.world.destroy?.();
-    this.renderer.destroy?.();
+    this.gameLifeCycle.onDestroy?.();
+    this.scripts.onDestroy?.();
+    this.world.onDestroy?.();
+    this.renderer.onDestroy?.();
   }
 
   public clear(): void {
@@ -40,16 +33,16 @@ export class GCSEngine<Container extends IGameWorldContainer, Renderer extends A
     this.gameLifeCycle.reset();
   }
 
-  public pause(): void {
-    this.gameLifeCycle.pause?.();
-  }
+  public pause = (): void => {
+    this.gameLifeCycle.onPause?.();
+  };
 
   public resume = (): void => {
-    this.gameLifeCycle.resume?.();
+    this.gameLifeCycle.onResume?.();
   };
 
   public start = (): void => {
-    this.gameLifeCycle.gameLoop.destroy?.();
+    this.gameLifeCycle.gameLoop.onDestroy?.();
     this.gameLifeCycle.gameLoop.addEntity(
       this.visibilityChangeListener,
       this.time,
@@ -57,10 +50,10 @@ export class GCSEngine<Container extends IGameWorldContainer, Renderer extends A
       this.scripts,
       this.renderer,
     );
-    this.gameLifeCycle.start?.();
+    this.gameLifeCycle.onStart?.();
   };
 
   public stop = (): void => {
-    this.gameLifeCycle.stop?.();
+    this.gameLifeCycle.onStop?.();
   };
 }

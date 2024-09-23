@@ -1,11 +1,12 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../../di/di.container';
 import {FakeRenderer} from '../../FakeRenderer';
-import {GCS_DI_TOKENS} from '../../di/di.tokens';
+import {getDITokens} from '../../../di/di.tokens';
+import {createGCSDIContainer} from '../../../di/di.container';
 import {TestScript} from '../test-entities/TestScript';
 
 describe('GameScripts', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Добавление и инициализация игровых скриптов', () => {
     const gameScripts = diContainer.get(GCS_DI_TOKENS.gcsGameScripts);
@@ -32,12 +33,12 @@ describe('GameScripts', () => {
     gameScripts.addScript(script);
 
     it('Обновление игровых скриптов', () => {
-      gameScripts.update(1);
+      gameScripts.onUpdate(1);
       expect(script.counter).toEqual(1);
     });
 
     it('Деструктуризация игровых скриптов', () => {
-      gameScripts.destroy();
+      gameScripts.onDestroy();
       expect(script.isDestroyed).toEqual(true);
     });
   });

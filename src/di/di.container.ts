@@ -1,33 +1,35 @@
 import {EventEmitter} from 'eventemitter3';
 import {Container, injected} from 'brandi';
-import {GCS_DI_TOKENS} from './di.tokens';
-import {IAsyncRenderer, IGameWorldContainer, IRenderer} from '../../core/core.types';
-import {GameObject} from '../../core/updatable-entities/GameObject';
-import {GameLifeCycle} from '../../core/game-loop/GameLifeCycle';
-import {Ticker} from '../../utils/Ticker/Ticker';
-import {GameLoop} from '../../core/game-loop/GameLoop';
-import {GameRenderer} from '../../core/updatable-entities/GameRenderer';
-import {GameState} from '../../core/game-loop/GameState';
-import {GameStateEvents} from '../../core/game-loop/GameStateEvents';
-import {GameTime} from '../../core/updatable-entities/GameTime';
-import {GameWorld} from '../../core/updatable-entities/GameWorld';
-import {GCSEngine} from '../../core/GCSEngine';
-import {VisibilityChangeListener} from '../../core/updatable-entities/VisibilityChangeListener';
-import {HealthComponent} from '../../components/HealthComponent';
-import {Movement2dComponent} from '../../components/Movement2dComponent';
-import {Movement3dComponent} from '../../components/Movement3dComponent';
-import {Transform2dComponent} from '../../components/Transform2dComponent';
-import {Transform3dComponent} from '../../components/Transform3dComponent';
-import {TimerComponent} from '../../components/TimerComponent';
-import {Vector2} from '../../utils/Vector2';
-import {Vector3} from '../../utils/Vector3';
-import {GameScripts} from '../../core/updatable-entities/GameScripts';
-import {CallbackCollector} from '../../utils/CallbacksCollector';
+import {getDITokens} from './di.tokens';
+import {IAsyncRenderer, IGameWorldContainer, IRenderer} from '../core/core.types';
+import {GameObject} from '../core/updatable-entities/GameObject';
+import {GameLifeCycle} from '../core/game-loop/GameLifeCycle';
+import {Ticker} from '../utils/Ticker/Ticker';
+import {GameLoop} from '../core/game-loop/GameLoop';
+import {GameRenderer} from '../core/updatable-entities/GameRenderer';
+import {GameState} from '../core/game-loop/GameState';
+import {GameStateEvents} from '../core/game-loop/GameStateEvents';
+import {GameTime} from '../core/updatable-entities/GameTime';
+import {GameWorld} from '../core/updatable-entities/GameWorld';
+import {Scope} from '../core/Scope';
+import {VisibilityChangeListener} from '../core/updatable-entities/VisibilityChangeListener';
+import {HealthComponent} from '../components/HealthComponent';
+import {Movement2dComponent} from '../components/Movement2dComponent';
+import {Movement3dComponent} from '../components/Movement3dComponent';
+import {Transform2dComponent} from '../components/Transform2dComponent';
+import {Transform3dComponent} from '../components/Transform3dComponent';
+import {TimerComponent} from '../components/TimerComponent';
+import {Vector2} from '../utils/Vector2';
+import {Vector3} from '../utils/Vector3';
+import {GameScripts} from '../core/updatable-entities/GameScripts';
+import {CallbackCollector} from '../utils/CallbacksCollector';
+import once from 'lodash.once';
 
-export function createGCSEngineDIContainer<GameWorldContainer extends IGameWorldContainer>(
+export const createGCSDIContainer = <GameWorldContainer extends IGameWorldContainer>(
   renderer: IRenderer<GameWorldContainer> | IAsyncRenderer<GameWorldContainer>,
-): Container {
+): Container => {
   const container = new Container();
+  const GCS_DI_TOKENS = getDITokens();
 
   container.bind(GCS_DI_TOKENS.gcsGameObject).toInstance(GameObject).inTransientScope();
   container.bind(GCS_DI_TOKENS.gcsGameObjectFactory).toFactory(GameObject);
@@ -56,7 +58,7 @@ export function createGCSEngineDIContainer<GameWorldContainer extends IGameWorld
   container.bind(GCS_DI_TOKENS.gcsGameScripts).toInstance(GameScripts).inTransientScope();
 
   injected(
-    GCSEngine,
+    Scope,
     GCS_DI_TOKENS.gcsGameWorld,
     GCS_DI_TOKENS.gcsGameTime,
     GCS_DI_TOKENS.gcsGameScripts,
@@ -64,7 +66,7 @@ export function createGCSEngineDIContainer<GameWorldContainer extends IGameWorld
     GCS_DI_TOKENS.gcsGameLifeCycle,
     GCS_DI_TOKENS.gcsVisibilityChangeListener,
   );
-  container.bind(GCS_DI_TOKENS.gcsEngine).toInstance(GCSEngine).inSingletonScope();
+  container.bind(GCS_DI_TOKENS.gcsScope).toInstance(Scope).inSingletonScope();
 
   injected(VisibilityChangeListener, GCS_DI_TOKENS.gcsCallbackCollector);
   container.bind(GCS_DI_TOKENS.gcsVisibilityChangeListener).toInstance(VisibilityChangeListener).inTransientScope();
@@ -99,8 +101,10 @@ export function createGCSEngineDIContainer<GameWorldContainer extends IGameWorld
   injected(Transform3dComponent, GCS_DI_TOKENS.gcsVector3Factory);
   container.bind(GCS_DI_TOKENS.gcsTransform3dComponent).toInstance(Transform3dComponent).inTransientScope();
 
-  injected(TimerComponent, GCS_DI_TOKENS.gcsEngine);
+  injected(TimerComponent, GCS_DI_TOKENS.gcsScope);
   container.bind(GCS_DI_TOKENS.gcsTimerComponent).toInstance(TimerComponent).inTransientScope();
 
   return container;
-}
+};
+
+export const createSingletonGCSDIContainer = once(createGCSDIContainer);

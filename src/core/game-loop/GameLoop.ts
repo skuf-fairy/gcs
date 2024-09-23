@@ -14,40 +14,40 @@ export class GameLoop extends GameLifeCycleEntityContainer<Function, IGameLifeCy
   }
 
   // старт игры
-  public start(): void {
-    super.start();
+  public onStart(): void {
+    super.onStart();
     this.ticker.add(this.tickerUpdate);
     this.ticker.start();
   }
 
   // возобновление игры
-  public resume(): void {
-    super.resume();
+  public onResume(): void {
+    super.onResume();
     this.ticker.add(this.tickerUpdate);
     this.ticker.start();
   }
 
   // пауза в игре
-  public pause(): void {
-    super.pause();
+  public onPause(): void {
+    super.onPause();
     this.ticker.remove(this.tickerUpdate);
     this.ticker.stop();
   }
 
   // выход из игры
   public stop(): void {
-    super.stop();
+    super.onStop();
     this.ticker.remove(this.tickerUpdate);
     this.ticker.stop();
   }
 
   public destroy(): void {
-    super.destroy();
+    super.onDestroy();
     this.ticker.stop();
     this.ticker.remove(this.tickerUpdate);
   }
 
   private tickerUpdate = (ticker: Ticker): void => {
-    this.update(ticker.deltaTime);
+    this.onUpdate(ticker.deltaTime);
   };
 }

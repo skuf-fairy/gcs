@@ -3,12 +3,12 @@ import {GameState} from './game-loop/GameState';
 import {GameStateEvents} from './game-loop/GameStateEvents';
 
 export interface IGameLifeCycleEntity {
-  start?(): void; // старт игры
-  stop?(): void; // остановка (окончание) игры
-  update?(delta: number): void; // обновление в геймлупе
-  destroy?(): void; // деструктуризация игры
-  pause?(): void; // пауза в игре
-  resume?(): void; // возобновление игры
+  onStart?(): void; // старт игры
+  onStop?(): void; // остановка (окончание) игры
+  onUpdate?(delta: number): void; // обновление в геймлупе
+  onDestroy?(): void; // деструктуризация игры
+  onPause?(): void; // пауза в игре
+  onResume?(): void; // возобновление игры
 }
 
 export interface IGameLifeCycle extends IGameLifeCycleEntity {
@@ -40,7 +40,7 @@ export interface IGameObject extends IGameLifeCycleEntity {
   tag: string;
   isMarkedAsDestroyed: boolean;
   world: IGameWorld;
-  addToWorld(world: IGameWorld): void;
+  onAddToWorld(world: IGameWorld): void;
   addComponent(...componentList: IGameObjectComponent[]): void;
   removeComponent(component: UnknownConstructor<IGameObjectComponent>): void;
   getComponent<T extends IGameObjectComponent>(component: UnknownConstructor<T>): T | undefined;
@@ -62,7 +62,7 @@ export interface IGameTime extends IGameLifeCycleEntity {
 }
 
 export interface IGameScript extends IGameLifeCycleEntity {
-  create?(): void;
+  onCreate?(): void;
 }
 
 export interface IGameScripts extends IGameLifeCycleEntity {

@@ -67,7 +67,7 @@ export class GameObject extends GameLifeCycleEntityContainer<Function, IGameObje
     return this.entityList.find((e) => e.tag === tag) as T | undefined;
   }
 
-  public addToWorld(world: IGameWorld): void {
+  public onAddToWorld(world: IGameWorld): void {
     this.gameWorld = world;
     this.entityList.forEach((c) => c.onAddToWorld?.(world));
   }

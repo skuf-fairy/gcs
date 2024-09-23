@@ -1,13 +1,14 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../../di/di.container';
 import {FakeRenderer} from '../../FakeRenderer';
-import {GCS_DI_TOKENS} from '../../di/di.tokens';
+import {getDITokens} from '../../../di/di.tokens';
+import {createGCSDIContainer} from '../../../di/di.container';
 import {TestComponent} from '../test-entities/TestComponent';
 import {Transform2dComponent} from '../../../components/Transform2dComponent';
 import {Movement2dComponent} from '../../../components/Movement2dComponent';
 
 describe('GameObject', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Создание игрового объекта с компонентом', () => {
     const go = diContainer.get(GCS_DI_TOKENS.gcsGameObject);
@@ -38,7 +39,7 @@ describe('GameObject', () => {
       go.addComponent(movementComponent, transformComponent, testComponent);
       world.addGameObject(go);
 
-      expect(() => go.update(1)).not.toThrowError();
+      expect(() => go.onUpdate(1)).not.toThrowError();
     });
   });
 
@@ -85,12 +86,12 @@ describe('GameObject', () => {
     world.addGameObject(go);
 
     it('Обновление компонентов игрового объекта', () => {
-      go.update(1);
+      go.onUpdate(1);
       expect(testComponent.counter).toEqual(1);
     });
 
     it('Деструктуризация игровых компонентов', () => {
-      go.destroy();
+      go.onDestroy();
       expect(testComponent.isDestroyed).toEqual(true);
     });
   });

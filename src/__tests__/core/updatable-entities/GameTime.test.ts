@@ -1,10 +1,11 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../../di/di.container';
+import {createGCSDIContainer} from '../../../di/di.container';
 import {FakeRenderer} from '../../FakeRenderer';
-import {GCS_DI_TOKENS} from '../../di/di.tokens';
+import {getDITokens} from '../../../di/di.tokens';
 
 describe('GameTime', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   it('Инициализация', () => {
     const gt = diContainer.get(GCS_DI_TOKENS.gcsGameTime);
@@ -16,9 +17,9 @@ describe('GameTime', () => {
   it('Обновление времени', () => {
     const gt = diContainer.get(GCS_DI_TOKENS.gcsGameTime);
 
-    gt.start();
-    gt.update();
-    gt.stop();
+    gt.onStart();
+    gt.onUpdate();
+    gt.onStop();
 
     expect(gt.getElapsedMS()).not.toEqual(0);
     expect(gt.getTimeMs()).not.toEqual(0);

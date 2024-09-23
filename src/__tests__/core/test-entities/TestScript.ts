@@ -11,15 +11,15 @@ export class TestScript implements IGameScript {
     this.isDestroyed = false;
   }
 
-  public create(): void {
+  public onCreate(): void {
     this.isCreated = true;
   }
 
-  public update(): void {
+  public onUpdate(): void {
     this.counter++;
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     this.isDestroyed = true;
   }
 }

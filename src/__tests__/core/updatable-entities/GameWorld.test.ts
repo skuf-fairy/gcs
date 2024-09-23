@@ -1,12 +1,13 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../../di/di.container';
+import {createGCSDIContainer} from '../../../di/di.container';
 import {FakeRenderer} from '../../FakeRenderer';
-import {GCS_DI_TOKENS} from '../../di/di.tokens';
 import {TestComponent} from '../test-entities/TestComponent';
 import {GameObject} from '../../../core/updatable-entities/GameObject';
+import {getDITokens} from '../../../di/di.tokens';
 
 describe('GameWorld', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Создание игрового мира с игровым объектом', () => {
     const go = diContainer.get(GCS_DI_TOKENS.gcsGameObject);
@@ -90,12 +91,12 @@ describe('GameWorld', () => {
     world.addGameObject(go);
 
     it('Обновление игрового мира', () => {
-      world.update(1);
+      world.onUpdate(1);
       expect(testComponent.counter).toEqual(1);
     });
 
     it('Деструктуризация игрового мира', () => {
-      world.destroy();
+      world.onDestroy();
       expect(testComponent.isDestroyed).toEqual(true);
     });
   });

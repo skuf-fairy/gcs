@@ -1,15 +1,16 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../di/di.container';
+import {createGCSDIContainer} from '../../di/di.container';
 import {FakeRenderer} from '../FakeRenderer';
-import {GCS_DI_TOKENS} from '../di/di.tokens';
+import {getDITokens} from '../../di/di.tokens';
 import {TestScript} from './test-entities/TestScript';
 import {TestComponent} from './test-entities/TestComponent';
 import {GameLoopState} from '../../core/game-loop/GameState';
 
-describe('GCSEngine', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+describe('Scope', () => {
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
-  const GCSEngine = diContainer.get(GCS_DI_TOKENS.gcsEngine);
+  const GCSEngine = diContainer.get(GCS_DI_TOKENS.gcsScope);
 
   describe('Описание игры через заполнение игрового мира и написания скриптов', () => {
     it('Добавление игрового объекта в мир', () => {

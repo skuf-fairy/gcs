@@ -1,10 +1,10 @@
 import {IGameLifeCycleEntity, GameLoopEvents, IGameWorldContainer, AnyRenderer} from '../../core/core.types';
 
-import {GCSEngine} from '../../core/GCSEngine';
+import {Scope} from '../Scope';
 import {CallbackCollector} from '../../utils/CallbacksCollector';
 
 export class VisibilityChangeListener implements IGameLifeCycleEntity {
-  private engine: GCSEngine<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>;
+  private scope: Scope<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>;
   private isPausedByVisibilityChangeEvent: boolean;
   private isSubscribeActive: boolean;
 
@@ -14,31 +14,31 @@ export class VisibilityChangeListener implements IGameLifeCycleEntity {
   }
 
   // todo resolution chain?
-  public bindEngine(engine: GCSEngine<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>): void {
-    this.engine = engine;
+  public bindScope(scope: Scope<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>): void {
+    this.scope = scope;
   }
 
-  public start(): void {
+  public onStart(): void {
     this.isPausedByVisibilityChangeEvent = false;
     this.isSubscribeActive = false;
 
     this.subscribeOnVisibilityChange();
 
     this.callbackCollector.add(
-      this.engine.gameLifeCycle.gameStateEvents.subscribeOnEvent(GameLoopEvents.Pause, this.handlePauseEvent),
+      this.scope.gameLifeCycle.gameStateEvents.subscribeOnEvent(GameLoopEvents.Pause, this.handlePauseEvent),
     );
     this.callbackCollector.add(
-      this.engine.gameLifeCycle.gameStateEvents.subscribeOnEvent(GameLoopEvents.Resume, this.handleResumeEvent),
+      this.scope.gameLifeCycle.gameStateEvents.subscribeOnEvent(GameLoopEvents.Resume, this.handleResumeEvent),
     );
   }
 
   private handleVisibilityPageChange = (): void => {
     if (document.hidden) {
       this.isPausedByVisibilityChangeEvent = true;
-      this.engine.pause();
+      this.scope.pause();
     } else {
       this.isPausedByVisibilityChangeEvent = false;
-      this.engine.resume();
+      this.scope.resume();
     }
   };
 

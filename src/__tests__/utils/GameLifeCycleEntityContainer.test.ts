@@ -1,14 +1,15 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../di/di.container';
 import {FakeRenderer} from '../FakeRenderer';
-import {GCS_DI_TOKENS} from '../di/di.tokens';
 import {GameLifeCycleEntityContainer} from '../../utils/GameLifeCycleEntityContainer';
 import {IGameObjectComponent} from '../../core/core.types';
 import {Transform2dComponent} from '../../components/Transform2dComponent';
 import {Movement2dComponent} from '../../components/Movement2dComponent';
+import {createGCSDIContainer} from '../../di/di.container';
+import {getDITokens} from '../../di/di.tokens';
 
 describe('GameLifeCycleEntityContainer', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Добавление объекта', () => {
     const container = new GameLifeCycleEntityContainer<Function, IGameObjectComponent>();

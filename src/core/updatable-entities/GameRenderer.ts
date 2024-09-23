@@ -15,28 +15,28 @@ export class GameRenderer<
     this.renderer.create(containerNode);
   }
 
-  public stop(): void {
-    this.renderer.stop?.();
+  public onStop(): void {
+    this.renderer.onStop?.();
   }
 
-  public start(): void {
-    this.renderer.start?.();
+  public onStart(): void {
+    this.renderer.onStart?.();
   }
 
-  public update(delta: number): void {
-    this.renderer.update?.(delta);
+  public onUpdate(delta: number): void {
+    this.renderer.onUpdate?.(delta);
   }
 
-  public destroy(): void {
-    this.renderer?.destroy?.();
+  public onDestroy(): void {
+    this.renderer?.onDestroy?.();
   }
 
-  public pause(): void {
-    this.renderer.stop?.();
+  public onPause(): void {
+    this.renderer.onPause?.();
   }
 
-  public resume(): void {
-    this.renderer.start?.();
+  public onResume(): void {
+    this.renderer.onResume?.();
   }
 
   get dimensions(): IDimensions {

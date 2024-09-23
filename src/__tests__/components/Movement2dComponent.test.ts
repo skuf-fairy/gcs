@@ -1,10 +1,11 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../di/di.container';
+import {createGCSDIContainer} from '../../di/di.container';
 import {FakeRenderer} from '../FakeRenderer';
-import {GCS_DI_TOKENS} from '../di/di.tokens';
+import {getDITokens} from '../../di/di.tokens';
 
 describe('Movement2dComponent', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Инициализация', () => {
     const movementComponent = diContainer.get(GCS_DI_TOKENS.gcsMovement2dComponent);
@@ -75,7 +76,7 @@ describe('Movement2dComponent', () => {
 
       movementComponent.velocity = 1;
       movementComponent.directionFromAngle = Math.PI / 2;
-      movementComponent.update(1);
+      movementComponent.onUpdate(1);
 
       expect(transformComponent.x).not.toEqual(0);
       expect(transformComponent.y).not.toEqual(0);

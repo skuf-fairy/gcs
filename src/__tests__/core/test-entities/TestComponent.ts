@@ -17,11 +17,11 @@ export class TestComponent extends BaseComponent {
     this.isCreated = true;
   }
 
-  public update(): void {
+  public onUpdate(): void {
     this.counter++;
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     this.isDestroyed = true;
   }
 }

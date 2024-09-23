@@ -44,14 +44,14 @@ export class GameLifeCycleEntityContainer<K, E extends IGameLifeCycleEntity> imp
 
   public pushEntity(key: K, entity: E): void {
     this.entityMap.addValue(key, entity);
-    if (entity.update) {
+    if (entity.onUpdate) {
       this.updatableEntityMap.addValue(key, entity);
     }
   }
 
   public dropEntityByKey(key: K): void {
     this.entityMap.dropKey(key).forEach((e) => {
-      e.destroy?.();
+      e.onDestroy?.();
     });
 
     this.updatableEntityMap.dropKey(key);
@@ -59,7 +59,7 @@ export class GameLifeCycleEntityContainer<K, E extends IGameLifeCycleEntity> imp
 
   public dropEntity(key: K, entity: E): void {
     this.entityMap.dropSetValue(key, entity).forEach((e) => {
-      e.destroy?.();
+      e.onDestroy?.();
     });
 
     this.updatableEntityMap.dropSetValue(key, entity);
@@ -69,31 +69,31 @@ export class GameLifeCycleEntityContainer<K, E extends IGameLifeCycleEntity> imp
     return this.entityMap.getValueCountByKey(key);
   }
 
-  public start(): void {
-    this.entityList.forEach((c) => c.start?.());
+  public onStart(): void {
+    this.entityList.forEach((c) => c.onStart?.());
   }
 
-  public stop(): void {
-    this.entityList.forEach((c) => c.stop?.());
+  public onStop(): void {
+    this.entityList.forEach((c) => c.onStop?.());
   }
 
-  public update(delta: number): void {
-    this.updatableEntityMap.getVault().forEach((e) => e.forEach((e) => e.update?.(delta)));
+  public onUpdate(delta: number): void {
+    this.updatableEntityMap.getVault().forEach((e) => e.forEach((e) => e.onUpdate?.(delta)));
   }
 
-  public destroy(): void {
-    this.entityList.forEach((c) => c.destroy?.());
+  public onDestroy(): void {
+    this.entityList.forEach((c) => c.onDestroy?.());
     this.entityMap.clear();
     this.updatableEntityMap.clear();
     this.entityMap = new KeyUniqValuesVault<K, E>();
     this.updatableEntityMap = new KeyUniqValuesVault<K, E>();
   }
 
-  public pause(): void {
-    this.entityList.forEach((c) => c.pause?.());
+  public onPause(): void {
+    this.entityList.forEach((c) => c.onPause?.());
   }
 
-  public resume(): void {
-    this.entityList.forEach((c) => c.resume?.());
+  public onResume(): void {
+    this.entityList.forEach((c) => c.onResume?.());
   }
 }

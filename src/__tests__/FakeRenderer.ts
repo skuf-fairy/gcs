@@ -1,4 +1,4 @@
-import {IDimensions, IGameWorldContainer, IRenderer} from '../core/core.types';
+import {IDimensions, IRenderer} from '../core/core.types';
 
 // болванка для отрисовщика, нужен для инициализации DI контейнера
 export class FakeRenderer implements IRenderer<FakeContainer> {

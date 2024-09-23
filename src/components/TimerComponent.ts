@@ -1,14 +1,14 @@
 import {FormatUtils} from '../utils/FormatUtils';
 
 import {BaseComponent} from './BaseComponent';
-import {GCSEngine} from '../core/GCSEngine';
+import {Scope} from '../core/Scope';
 import {AnyRenderer, IGameWorldContainer} from '../core/core.types';
 
 export class TimerComponent extends BaseComponent {
   private timeMS: number;
   private isStarted: boolean;
 
-  constructor(private readonly engine: GCSEngine<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>) {
+  constructor(private readonly scope: Scope<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>) {
     super();
 
     this.isStarted = false;
@@ -32,7 +32,7 @@ export class TimerComponent extends BaseComponent {
   public update(): void {
     if (this.timeMS === 0 || !this.isStarted) return;
 
-    this.timeMS = Math.max(0, this.timeMS - this.engine.time.getElapsedMS());
+    this.timeMS = Math.max(0, this.timeMS - this.scope.time.getElapsedMS());
 
     if (this.timeMS === 0) {
       this.stopTimer();

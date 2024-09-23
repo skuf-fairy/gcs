@@ -1,10 +1,11 @@
 import {describe, expect, it} from 'vitest';
-import {createGCSEngineDIContainer} from '../di/di.container';
 import {FakeRenderer} from '../FakeRenderer';
-import {GCS_DI_TOKENS} from '../di/di.tokens';
+import {createGCSDIContainer} from '../../di/di.container';
+import {getDITokens} from '../../di/di.tokens';
 
 describe('Movement3dComponent', () => {
-  const diContainer = createGCSEngineDIContainer(new FakeRenderer());
+  const diContainer = createGCSDIContainer(new FakeRenderer());
+  const GCS_DI_TOKENS = getDITokens();
 
   describe('Init', () => {
     const movementComponent = diContainer.get(GCS_DI_TOKENS.gcsMovement3dComponent);
@@ -74,7 +75,7 @@ describe('Movement3dComponent', () => {
       movementComponent.dirX = 1;
       movementComponent.dirY = 1;
       movementComponent.dirZ = 1;
-      movementComponent.update(1);
+      movementComponent.onUpdate(1);
 
       expect(transformComponent.x).not.toEqual(0);
       expect(transformComponent.y).not.toEqual(0);

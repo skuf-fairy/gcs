@@ -22,8 +22,8 @@ export class GameWorld extends GameLifeCycleEntityContainer<Function, IGameObjec
    * Обновление игровых объектов + чистка от уничтоженных
    * @param delta Время между кадрами
    */
-  public update(delta: number): void {
-    super.update(delta);
+  public onUpdate(delta: number): void {
+    super.onUpdate(delta);
     this.clearDestroyedGameObjects();
   }
 
@@ -33,7 +33,7 @@ export class GameWorld extends GameLifeCycleEntityContainer<Function, IGameObjec
    */
   public addGameObject(...gameObjectList: IGameObject[]): void {
     gameObjectList.forEach((go) => {
-      go.addToWorld(this);
+      go.onAddToWorld(this);
 
       this.pushEntity(go.constructor, go);
     });
@@ -128,6 +128,6 @@ export class GameWorld extends GameLifeCycleEntityContainer<Function, IGameObjec
   }
 
   public clear(): void {
-    this.destroy();
+    this.onDestroy();
   }
 }

@@ -11,10 +11,13 @@ export {GameLoop} from './core/game-loop/GameLoop';
 export {GameState} from './core/game-loop/GameState';
 export {GameStateEvents} from './core/game-loop/GameStateEvents';
 export {GameLifeCycle} from './core/game-loop/GameLifeCycle';
-
-export {GCSEngine} from './core/GCSEngine';
+export {Scope} from './core/Scope';
 
 export {ObservableData} from './utils/ObservableData';
 export {Ticker} from './utils/Ticker/Ticker';
+export {Directions} from './constants';
+export {Vector2Utils} from './utils/Vector2Utils';
+
+export {createScope} from './di/createScope';
 
 export * from './components/index';

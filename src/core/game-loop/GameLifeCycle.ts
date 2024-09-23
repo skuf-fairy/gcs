@@ -10,46 +10,46 @@ export class GameLifeCycle implements IGameLifeCycle {
     public readonly gameLoop: IGameLoop,
   ) {}
 
-  public destroy(): void {
-    this.gameLoop.destroy?.();
+  public onDestroy(): void {
+    this.gameLoop.onDestroy?.();
     this.gameState.setState(GameLoopState.Idle);
   }
 
-  public pause(): void {
+  public onPause(): void {
     if (this.gameState.isUpdatingState()) {
       this.gameState.setState(GameLoopState.Paused);
       this.gameStateEvents.emitEvent(GameLoopEvents.Pause);
-      this.gameLoop.pause?.();
+      this.gameLoop.onPause?.();
     }
   }
 
-  public resume(): void {
+  public onResume(): void {
     if (this.gameState.isPausedState()) {
       this.gameState.setState(GameLoopState.Updating);
       this.gameStateEvents.emitEvent(GameLoopEvents.Resume);
-      this.gameLoop.resume?.();
+      this.gameLoop.onResume?.();
     }
   }
 
-  public start(): void {
+  public onStart(): void {
     if (this.gameState.isIdleState() || this.gameState.isStoppedState()) {
       this.gameState.setState(GameLoopState.Updating);
       this.gameStateEvents.emitEvent(GameLoopEvents.Start);
 
-      this.gameLoop.start?.();
+      this.gameLoop.onStart?.();
     }
   }
 
-  public stop(): void {
+  public onStop(): void {
     if (this.gameState.isUpdatingState()) {
       this.gameState.setState(GameLoopState.Stopped);
       this.gameStateEvents.emitEvent(GameLoopEvents.Stop);
-      this.gameLoop.stop?.();
+      this.gameLoop.onStop?.();
     }
   }
 
   public reset(): void {
-    this.gameLoop.stop?.();
+    this.gameLoop.onStop?.();
     this.gameState.setState(GameLoopState.Idle);
   }
 }
