@@ -27,8 +27,8 @@ import once from 'lodash.once';
 
 export const createGCSDIContainer = <GameWorldContainer extends IGameWorldContainer>(
   renderer: IRenderer<GameWorldContainer> | IAsyncRenderer<GameWorldContainer>,
+  container: Container,
 ): Container => {
-  const container = new Container();
   const GCS_DI_TOKENS = getDITokens();
 
   container.bind(GCS_DI_TOKENS.gcsGameObject).toInstance(GameObject).inTransientScope();

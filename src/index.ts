@@ -20,4 +20,7 @@ export {Vector2Utils} from './utils/Vector2Utils';
 
 export {createScope} from './di/createScope';
 
+export {getDITokens} from './di/di.tokens';
+export {createGCSDIContainer} from './di/di.container';
+
 export * from './components/index';
