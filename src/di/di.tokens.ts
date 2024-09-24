@@ -24,8 +24,11 @@ import {Vector3} from '../utils/Vector3';
 import {AnyRenderer, IGameWorldContainer} from '../core/core.types';
 import once from 'lodash.once';
 
-export const getDITokens = once(() => ({
-  gcsScope: token<Scope<IGameWorldContainer, AnyRenderer<IGameWorldContainer>>>('gcsEngine'),
+export const getDITokens = once(<
+  GameWorldContainer extends IGameWorldContainer,
+  Renderer extends AnyRenderer<GameWorldContainer>,
+>() => ({
+  gcsScope: token<Scope<GameWorldContainer, Renderer>>('gcsEngine'),
   gcsGameLifeCycle: token<GameLifeCycle>('gcsGameLifeCycle'),
   gcsGameLoop: token<GameLoop>('gcsGameLoop'),
   gcsGameObject: token<GameObject>('gcsGameObject'),
