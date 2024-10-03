@@ -24,6 +24,8 @@ import {Vector3} from '../utils/Vector3';
 import {GameScripts} from '../core/updatable-entities/GameScripts';
 import {CallbackCollector} from '../utils/CallbacksCollector';
 import once from 'lodash.once';
+import {Timeouts} from 'src/core/time-utils/Timeouts';
+import {TimeIntervals} from 'src/core/time-utils/TimeIntervals';
 
 export const createGCSDIContainer = <GameWorldContainer extends IGameWorldContainer>(
   renderer: IRenderer<GameWorldContainer> | IAsyncRenderer<GameWorldContainer>,
@@ -51,8 +53,12 @@ export const createGCSDIContainer = <GameWorldContainer extends IGameWorldContai
   injected(GameStateEvents, GCS_DI_TOKENS.gcsEventEmitter);
   container.bind(GCS_DI_TOKENS.gcsGameStateEvents).toInstance(GameStateEvents).inTransientScope();
 
-  injected(GameTime, GCS_DI_TOKENS.gcsTicker);
+  injected(GameTime, GCS_DI_TOKENS.gcsTicker, GCS_DI_TOKENS.gcsTimeouts, GCS_DI_TOKENS.gcsTimeIntervals);
   container.bind(GCS_DI_TOKENS.gcsGameTime).toInstance(GameTime).inTransientScope();
+
+  container.bind(GCS_DI_TOKENS.gcsTimeouts).toInstance(Timeouts).inTransientScope();
+  container.bind(GCS_DI_TOKENS.gcsTimeIntervals).toInstance(TimeIntervals).inTransientScope();
+
   container.bind(GCS_DI_TOKENS.gcsGameWorld).toInstance(GameWorld).inTransientScope();
 
   container.bind(GCS_DI_TOKENS.gcsGameScripts).toInstance(GameScripts).inTransientScope();

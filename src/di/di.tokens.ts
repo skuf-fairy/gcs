@@ -23,6 +23,8 @@ import {Vector2} from '../utils/Vector2';
 import {Vector3} from '../utils/Vector3';
 import {AnyRenderer, IGameWorldContainer} from '../core/core.types';
 import once from 'lodash.once';
+import {TimeIntervals} from 'src/core/time-utils/TimeIntervals';
+import {Timeouts} from 'src/core/time-utils/Timeouts';
 
 export const getDITokens = once(<
   GameWorldContainer extends IGameWorldContainer,
@@ -40,6 +42,8 @@ export const getDITokens = once(<
   gcsGameTime: token<GameTime>('gcsGameTime'),
   gcsGameWorld: token<GameWorld>('gcsGameWorld'),
   gcsVisibilityChangeListener: token<VisibilityChangeListener>('gcsVisibilityChangeListener'),
+  gcsTimeIntervals: token<TimeIntervals>('gcsTimeIntervals'),
+  gcsTimeouts: token<Timeouts>('gcsTimeouts'),
   // utils
   gcsCallbackCollector: token<CallbackCollector>('gcsCallbackCollector'),
   gcsEventEmitter: token<EventEmitter>('gcsEventEmitter'),

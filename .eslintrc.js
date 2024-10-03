@@ -11,7 +11,12 @@ module.exports = {
   },
   plugins: ['prettier', '@typescript-eslint'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   ignorePatterns: ['node_modules', 'lib'],
   overrides: [
