@@ -42,7 +42,7 @@ export class VisibilityChangeListener implements IGameLifeCycleEntity {
     }
   };
 
-  public stop(): void {
+  public onStop(): void {
     this.unsubscribeOnVisibilityChange();
     this.callbackCollector.execute();
   }

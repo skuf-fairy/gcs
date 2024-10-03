@@ -19,29 +19,29 @@ export class GameTime implements IGameTime {
     this.timeMs = timeMS;
   }
 
-  public start(): void {
+  public onStart(): void {
     this.timeouts.clear();
     this.intervals.clear();
     this.timeMs = this.ticker.lastTime;
     this.ticker.start();
   }
 
-  public update(): void {
+  public onUpdate(): void {
     const elapsedTime = this.getElapsedMS();
     this.timeouts.updateTimeouts(elapsedTime);
     this.intervals.updateIntervals(elapsedTime);
-    this.timeMs += this.getElapsedMS();
+    this.timeMs += elapsedTime;
   }
 
-  public pause(): void {
+  public onPause(): void {
     this.ticker.stop();
   }
 
-  public stop(): void {
+  public onStop(): void {
     this.ticker.stop();
   }
 
-  public destroy(): void {
+  public onDestroy(): void {
     this.ticker.stop();
   }
 
